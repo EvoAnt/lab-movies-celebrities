@@ -1,6 +1,6 @@
 <h2>Edit Movie</h2>
 
-<form action="/movies/{{_id}}" method="post">
+<form action="/movies/edit/{{_id}}" method="post">
     <label for="title">Title</label>
     <input id="title" type="text" name="title" value="{{title}}">
 
@@ -12,8 +12,11 @@
 
     <label for="celebrity-select"> Cast:
         <select name="cast" multiple>
-            <option disable selected value="{{cast}}"></option>
-            {{#each celebrities}}
+            {{!-- {{#each cast}}
+        <option value="{{_id}}" {{#if (contains cast _id)}}selected{{/if}}> {{name}} </option>
+            {{/each}} --}}
+
+            {{#each cast}}
             <option value="{{_id}}"> {{name}} </option>
             {{/each}}
         </select>

@@ -67,7 +67,8 @@ router.post("/delete/:moviesId", (req, res, next) => {
 
 router.get("/edit/:movieId", (req, res, next) => {
     Movies.findById(req.params.movieId)
-    Celebrity.find()
+    // Celebrity.find()
+        .populate("cast")
       .then((movie) => {
         console.log("editing movie ===>", movie);
         res.render("movies/edit-movie.hbs", movie);
@@ -78,5 +79,26 @@ router.get("/edit/:movieId", (req, res, next) => {
       });
   });
 
-router.post('')
+router.post('/edit/:movieId', (req, res, next) => {
+    let movieId = req.params.movieId;
+    let {title, genre, plot, cast} = req.body;
+    Movies.findByIdAndUpdate(
+        movieId, 
+        {
+            title,
+            genre,
+            plot,
+            cast
+    },
+    {new: true}
+    )
+    .then((updatedMovie) => {
+        console.log('updated movie ===>', updatedMovie)
+        res.redirect(`/movies/details/${updatedMovie._id}`)
+    })
+    .catch((err) => {
+        console.log(err);
+        next(err);
+      });
+});
 module.exports = router;
