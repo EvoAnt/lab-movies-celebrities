@@ -40,18 +40,43 @@ router.get("/", (req, res, next) => {
     });
 });
 
-router.get('/details/:movieId', (req, res, next) => {
-    Movies.findById(req.params.movieId)
-    .populate('cast')
+router.get("/details/:movieId", (req, res, next) => {
+  Movies.findById(req.params.movieId)
+    .populate("cast")
     .then((movie) => {
-        console.log('Found movie ===>', movie)
-        res.render('movies/movie-details.hbs', movie)
+      console.log("Found movie ===>", movie);
+      res.render("movies/movie-details.hbs", movie);
     })
     .catch((err) => {
+      console.log(err);
+      next(err);
+    });
+});
+
+router.post("/delete/:moviesId", (req, res, next) => {
+  Movies.findByIdAndRemove(req.params.moviesId)
+    .then((movie) => {
+      console.log("Deleted movie ===>", movie);
+      res.redirect("/movies");
+    })
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
+});
+
+router.get("/edit/:movieId", (req, res, next) => {
+    Movies.findById(req.params.movieId)
+    Celebrity.find()
+      .then((movie) => {
+        console.log("editing movie ===>", movie);
+        res.render("movies/edit-movie.hbs", movie);
+      })
+      .catch((err) => {
         console.log(err);
         next(err);
       });
-});
+  });
 
-
+router.post('')
 module.exports = router;

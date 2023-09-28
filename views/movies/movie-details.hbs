@@ -12,3 +12,11 @@
     <p>- "{{catchPhrase}}"</p>
 
 {{/each}}
+
+<form action="/movies/delete/{{_id}}" method="POST">
+  <button>Delete</button>
+</form>
+
+<form action="/movies/edit/{{_id}}" method="POST">
+  <button>Edit Movie</button>
+</form>
